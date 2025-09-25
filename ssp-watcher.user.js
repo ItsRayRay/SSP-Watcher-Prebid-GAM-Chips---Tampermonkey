@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         SSP Checker
 // @namespace    https://tampermonkey.net/
-// @version      0.3.1
+// @version      0.3.2
 // @description  Show numeric SSP ID of the Prebid (bidWon) winner per ad unit; falls back to 00 when unknown.
-// @author       SSP Watcher
+// @author       ItsRayRay (https://github.com/ItsRayRay)
 // @match        *://*/*
 // @grant        none
 // @run-at       document-idle
@@ -237,7 +237,7 @@
   hookSPA();
   LOG('Boot', location.href);
   // Dev: expose debugging handle
-  try { window.sspWatcher = { chips, slotMeta, prebidWins, rescan, scan, ensureChip, version: '0.3.1' }; } catch (e) {}
+  try { window.sspWatcher = { chips, slotMeta, prebidWins, rescan, scan, ensureChip, version: '0.3.2' }; } catch (e) {}
   // Extra rescans soon after boot to catch late inits
   [200, 800, 1800, 3500].forEach((ms) => setTimeout(scan, ms));
 
