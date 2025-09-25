@@ -209,3 +209,220 @@ Troubleshooting on Mobile
   - Ensure “Allow in Incognito” is enabled if you test in private tabs.
   - Confirm the script is enabled in Tampermonkey and the “Matches” include your test domain.
   - Open the page’s DevTools remote debugging (chrome://inspect from a desktop) to view “[SSP]” logs and verify that Prebid/GPT are present.
+
+## Auto-Update from GitHub (Desktop & iOS)
+
+This project supports installing the userscript directly from GitHub RAW and receiving automatic updates whenever you push changes and bump the version.
+
+RAW install/update URL (use this exact link):
+- https://raw.githubusercontent.com/ItsRayRay/SSP-Watcher-Prebid-GAM-Chips---Tampermonkey/main/ssp-watcher.user.js
+
+Important: The repository must be Public. Always use the RAW link above (not the normal GitHub "blob" page).
+
+---
+
+### Quick Install
+
+Desktop (Chrome/Edge/Firefox)
+- Tampermonkey icon → Dashboard → Utilities → "Install from URL"
+- Paste the RAW URL above → Install
+
+iOS (Safari) using Tampermonkey app
+- Install Tampermonkey from the App Store and enable the Safari extension (Settings → Safari → Extensions)
+- Open Tampermonkey app → Dashboard → Utilities (or "+") → "Install from URL"
+- Paste the RAW URL above → Install
+
+iOS using the "Userscripts" app (Quoid)
+- Install "Userscripts" from the App Store and enable it in Safari (Settings → Safari → Extensions)
+- Open the Userscripts app → Add → "Add Remote Script" (or "Add from URL")
+- Paste the RAW URL above → Save (enable auto-update if available)
+
+---
+
+### Userscript Header: Required for Auto-Updates
+
+Add these lines to the metadata block at the top of your userscript and bump the version on every release:
+
+```js
+// ==UserScript==
+// @name         SSP Checker
+// @namespace    https://tampermonkey.net/
+// @version      0.3.1
+// @description  Show numeric SSP ID of the Prebid (bidWon) winner per ad unit; falls back to 00 when unknown.
+// @author       SSP Watcher
+// @match        *://*/*
+// @grant        none
+// @run-at       document-idle
+// @noframes
+// @downloadURL  https://raw.githubusercontent.com/ItsRayRay/SSP-Watcher-Prebid-GAM-Chips---Tampermonkey/main/ssp-watcher.user.js
+// @updateURL    https://raw.githubusercontent.com/ItsRayRay/SSP-Watcher-Prebid-GAM-Chips---Tampermonkey/main/ssp-watcher.user.js
+// @homepageURL  https://github.com/ItsRayRay/SSP-Watcher-Prebid-GAM-Chips---Tampermonkey
+// @supportURL   https://github.com/ItsRayRay/SSP-Watcher-Prebid-GAM-Chips---Tampermonkey/issues
+// ==/UserScript==
+```
+
+Notes:
+- Change @version each time you publish (e.g., 0.3.1 → 0.3.2). Tampermonkey updates only when it sees a higher version.
+- Keep the branch name ("main") in the URLs correct for your repo.
+
+---
+
+### Release Workflow
+
+1) Edit your script code
+2) Increase the @version in the metadata block
+3) Commit and push to GitHub
+4) Tampermonkey (and compatible managers) will auto-check and fetch updates. You can also manually "Check for updates" in the dashboard.
+
+---
+
+### Desktop Installation (Details)
+
+Option A — Direct from RAW
+- Paste the RAW URL into the address bar. If the browser tries to download, prefer Option B.
+
+Option B — From Tampermonkey Dashboard
+- Tampermonkey icon → Dashboard → Utilities → "Install from URL"
+- Paste the RAW URL → Install
+
+Verify:
+- Tampermonkey icon → Dashboard → click the script → ensure downloadURL/updateURL show the RAW URL
+- Click "Check for updates" to test
+
+---
+
+### iOS Installation (Details)
+
+Tampermonkey (Safari)
+- App Store → install "Tampermonkey"
+- Enable in Settings → Safari → Extensions (and allow in Private if needed)
+- Tampermonkey app → Dashboard → Utilities → "Install from URL" → paste RAW URL → Install
+- Verify updateURL/downloadURL in the script details
+
+Userscripts app (Quoid)
+- Add Remote Script with the RAW URL (recommended to receive updates)
+- Pull-to-refresh or use its update controls to fetch new versions
+- If you import a local file instead, updates are manual unless you re-import
+
+---
+
+### Troubleshooting & Pitfalls
+
+- If using the GitHub "blob" page, install won’t auto-update. Always use the RAW URL.
+- If the RAW URL downloads a file:
+  - Use "Install from URL" inside Tampermonkey/Userscripts instead of opening the link directly
+- No updates arriving:
+  - Ensure @version increased in the script header
+  - Ensure @downloadURL/@updateURL exactly match the RAW URL
+  - Repo must be Public
+  - GitHub RAW may take up to ~1 minute to propagate via CDN
+- iOS Private Browsing:
+  - Explicitly allow your extension for Private in Settings → Safari → Extensions
+
+This setup ensures users install once from the RAW link and automatically get your changes after you push and bump @version.
+
+
+---
+
+## Important: Release Checklist (Don’t forget)
+
+Use this quick checklist every time you publish an update so all users auto-update without manual re-install:
+
+- Bump version in the userscript header:
+  - Edit [SSP-watcher/ssp-watcher.user.js](SSP-watcher/ssp-watcher.user.js) and increase the `@version` (e.g., 0.3.1 → 0.3.2)
+- Ensure update URLs are correct in the header:
+  - `@downloadURL  https://raw.githubusercontent.com/ItsRayRay/SSP-Watcher-Prebid-GAM-Chips---Tampermonkey/main/ssp-watcher.user.js`
+  - `@updateURL    https://raw.githubusercontent.com/ItsRayRay/SSP-Watcher-Prebid-GAM-Chips---Tampermonkey/main/ssp-watcher.user.js`
+- Commit and push to the same branch referenced in the URLs (e.g., main)
+- Optional: Update any displayed runtime version string you keep in code (e.g., `window.sspWatcher.version`) in [SSP-watcher/ssp-watcher.user.js](SSP-watcher/ssp-watcher.user.js)
+- Confirm the repository stays Public (clients must be able to fetch the RAW URL)
+- After pushing, you can force-pull:
+  - Tampermonkey Dashboard → “Check for updates” (desktop/iOS)
+  - Userscripts app (iOS) → pull-to-refresh or use its update control for remote scripts
+
+Install/Update URL (RAW — share this link with users):
+- https://raw.githubusercontent.com/ItsRayRay/SSP-Watcher-Prebid-GAM-Chips---Tampermonkey/main/ssp-watcher.user.js
+
+---
+
+## Author
+
+- ItsRayRay — https://github.com/ItsRayRay/
+
+
+---
+
+## Quick Install Guide (Desktop, iOS, Android)
+
+Install once from the RAW link below. Future updates are automatic when the script’s `@version` is bumped and pushed to GitHub.
+
+RAW install/update URL (share this exact link):
+- https://raw.githubusercontent.com/ItsRayRay/SSP-Watcher-Prebid-GAM-Chips---Tampermonkey/main/ssp-watcher.user.js
+
+How updates work (summary)
+- The userscript header includes `@updateURL` and `@downloadURL` that point to the RAW link.
+- Tampermonkey (and similar managers) periodically check for updates. When they see a higher `@version`, they fetch and install the new script automatically.
+- You can force an update via “Check for updates.”
+
+---
+
+### Desktop (Chrome / Edge / Firefox)
+
+1) Install Tampermonkey from your browser’s extension store.
+2) Open Tampermonkey → Dashboard → Utilities → “Install from URL”.
+3) Paste the RAW URL above → Install.
+4) Verify in the script’s details that `updateURL` and `downloadURL` match the RAW link.
+5) That’s it—updates are automatic after you bump `@version` and push to GitHub.
+
+Tip: You can force updates any time via Tampermonkey Dashboard → “Check for updates”.
+
+---
+
+### iOS (Safari)
+
+Option A — Tampermonkey for Safari (recommended)
+1) App Store → install “Tampermonkey”.
+2) Enable in iOS Settings → Safari → Extensions (allow for All Websites; enable in Private if needed).
+3) Tampermonkey app → Dashboard → Utilities (or “+”) → “Install from URL”.
+4) Paste the RAW URL above → Install.
+5) Verify `updateURL`/`downloadURL` in the script’s details. Updates are automatic when you bump `@version`.
+
+Option B — “Userscripts” app by Quoid (Safari extension)
+1) App Store → install “Userscripts”. Enable in Settings → Safari → Extensions.
+2) Open the Userscripts app → Add → “Add Remote Script” (or “Add from URL”).
+3) Paste the RAW URL above → Save. Enable auto-update/refresh if available.
+4) Updates are fetched periodically or when you pull-to-refresh in the app. Keep the RAW URL and bump `@version` on releases.
+
+---
+
+### Android
+
+Option A — Kiwi Browser (supports Chrome extensions)
+1) Install “Kiwi Browser” from Google Play.
+2) Open Kiwi → go to the Chrome Web Store → install “Tampermonkey”.
+3) Tampermonkey icon → Dashboard → Utilities → “Install from URL”.
+4) Paste the RAW URL above → Install.
+5) Updates are automatic when you bump `@version` and push to GitHub. You can also “Check for updates”.
+
+Option B — Firefox for Android + Tampermonkey (if supported in your build)
+- Similar flow: install Tampermonkey, then “Install from URL” with the RAW link.
+
+---
+
+### Notes & Pitfalls
+
+- Always install from the RAW link (raw.githubusercontent.com), not the GitHub “blob” page.
+- The repository must be Public so clients can fetch the RAW URL.
+- Bump `@version` in the userscript header on every release; otherwise managers won’t fetch the update.
+- CDN cache: RAW may take up to ~1 minute to propagate globally.
+- On mobile, ensure the extension is enabled for the site and (if needed) in Private browsing.
+
+---
+
+### Developer Reminder (Release Flow)
+
+- Edit code in [SSP-watcher/ssp-watcher.user.js](SSP-watcher/ssp-watcher.user.js)
+- Bump `@version` in the header (e.g., 0.3.1 → 0.3.2)
+- Commit and push to the same branch used by the RAW URL (e.g., main)
+- Optional: update the in-page runtime version string if you keep one in [SSP-watcher/ssp-watcher.user.js](SSP-watcher/ssp-watcher.user.js)
+- Users will receive the update automatically; “Check for updates” will pull it immediately
