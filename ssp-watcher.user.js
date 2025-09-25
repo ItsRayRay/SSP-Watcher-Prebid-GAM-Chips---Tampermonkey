@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         SSP Watcher Masked Chips
+// @name         SSP Checker
 // @namespace    https://tampermonkey.net/
 // @version      0.3.0
 // @description  Show numeric SSP ID of the Prebid (bidWon) winner per ad unit; falls back to 00 when unknown.
