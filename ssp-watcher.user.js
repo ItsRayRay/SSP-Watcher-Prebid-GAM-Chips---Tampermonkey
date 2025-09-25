@@ -249,7 +249,7 @@
         padding: 1px 6px;
         border-radius: 10px;
         font: 11px/1.4 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-        background: rgba(33, 150, 243, 0.85);
+        background: #2196F3;
         color: #fff;
         pointer-events: none;
         white-space: nowrap;
@@ -259,11 +259,11 @@
         transition: opacity 150ms ease-in-out;
       }
       .ssp-watcher-chip[data-status="known"] {
-        opacity: 0.95;
+        opacity: 1;
       }
       .ssp-watcher-chip[data-status="unknown"] {
-        opacity: 0.5;
-        background: rgba(120, 120, 120, 0.7);
+        opacity: 1;
+        background: #787878;
       }
       .ssp-watcher-unit {
         position: absolute;
@@ -273,13 +273,13 @@
         padding: 0 6px;
         border-radius: 8px;
         font: 10px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-        background: rgba(0, 0, 0, 0.65);
+        background: #000;
         color: #fff;
         pointer-events: none;
         white-space: nowrap;
         z-index: 2147483000;
         box-shadow: 0 0 0 1px rgba(0,0,0,0.08);
-        opacity: 0.9;
+        opacity: 1;
       }
     `;
     (document.head || document.documentElement).appendChild(style);
