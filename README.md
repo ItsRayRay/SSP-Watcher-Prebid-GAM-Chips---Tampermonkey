@@ -168,13 +168,6 @@ Aliases (examples)
 - Custom wrappers may require adding more aliases or SafeFrame host hints
 - Some single-slot layouts reuse containers across refresh sequences; the script tries to de-duplicate badges per container
 
----
-
-## License
-
-MIT (recommended) — you can update the script header to add `@license MIT`.
-
----
 
 ## Changelog
 
@@ -185,3 +178,34 @@ MIT (recommended) — you can update the script header to add `@license MIT`.
   - Ad Unit Code badge (last slug)
   - Chip de-duplication per container
   - Debug shortcuts and console tracing# SSP-Watcher-Prebid-GAM-Chips---Tampermonkey
+
+## Install on Microsoft Edge Mobile (Android)
+
+Edge Mobile is gradually rolling out extension support. If your build supports extensions, you can install Tampermonkey directly. If not, use the alternative path below.
+
+Option A — Edge Mobile with Extensions (Preview)
+- Update Edge to the latest version available on your device (Stable/Dev/Beta).
+- Open Edge → Menu (…) → Settings → Extensions (Preview).
+  - If the Extensions toggle exists, enable it. If you can’t find it, try visiting edge://extensions in the address bar and check if extensions are available on your build.
+- Tap “Open extension store” (or “Get extensions”).
+- Search for “Tampermonkey” and install it from the Microsoft Add-ons store.
+- Open Tampermonkey and add the userscript:
+  - Create script: Dashboard → “+” → “Create a new script…”
+  - Copy the contents from [SSP-watcher/ssp-watcher.user.js](SSP-watcher/ssp-watcher.user.js) and paste into the editor, then Save.
+  - Reload a site with Prebid/GAM inventory and verify the badges show.
+
+Option B — If extensions are not available on your Edge build
+- Use Kiwi Browser (Android), which supports Chrome extensions:
+  - Install Kiwi from the Play Store, open chrome://extensions, enable “Developer mode”, open the Chrome Web Store, install “Tampermonkey”.
+  - In Tampermonkey, create a new script and paste the code from [SSP-watcher/ssp-watcher.user.js](SSP-watcher/ssp-watcher.user.js), then Save.
+  - Load a site with Prebid/GAM inventory and verify the badges show.
+
+Notes
+- iOS: Edge on iOS currently does not support extensions. Consider Safari with a compatible userscript manager or use a desktop/Android device to run this userscript.
+- If pasting is cumbersome on mobile, host the raw .user.js file and open its URL directly in the mobile browser; Tampermonkey will offer an “Install” prompt.
+
+Troubleshooting on Mobile
+- If badges don’t show:
+  - Ensure “Allow in Incognito” is enabled if you test in private tabs.
+  - Confirm the script is enabled in Tampermonkey and the “Matches” include your test domain.
+  - Open the page’s DevTools remote debugging (chrome://inspect from a desktop) to view “[SSP]” logs and verify that Prebid/GPT are present.
