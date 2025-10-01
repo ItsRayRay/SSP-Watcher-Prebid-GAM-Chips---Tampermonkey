@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SSP Checker
 // @namespace    https://tampermonkey.net/
-// @version      0.3.2
+// @version      0.3.3
 // @description  Show numeric SSP ID of the Prebid (bidWon) winner per ad unit; falls back to 00 when unknown.
 // @author       ItsRayRay (https://github.com/ItsRayRay)
 // @match        *://*/*
@@ -20,7 +20,6 @@
     return;
   }
 
-  const LOG = (...args) => console.log('[SSP]', ...args);
   const once = (fn) => {
     let ran = false;
     let result;
@@ -73,6 +72,17 @@
     }
   })();
 
+  const LOG = (...args) => {
+    if (!DEBUG_MODE) {
+      return;
+    }
+    try {
+      console.log('[SSP]', ...args);
+    } catch (error) {
+      // ignore console access issues
+    }
+  };
+
   const cssEscape = (value) => {
     const stringValue = String(value || '');
     if (typeof CSS !== 'undefined' && typeof CSS.escape === 'function') {
@@ -103,6 +113,7 @@
     'Adform': '03',
     'Adhese': '04',
     'Adyoulike': '05',
+    'Amazon': '32',
     'ConnectAd': '06',
     'Criteo': '07',
     'Equativ': '08',
@@ -136,6 +147,10 @@
   );
 
   const SSP_ALIAS_RULES = [
+    {
+      regex: /amazon publisher services|amazon\s*(tam|uam)|\bamazon\b|\baps\b|apstag|transparent ad marketplace|unified ad marketplace|\buam\b|\btam\b|apstream/i,
+      canonical: 'Amazon',
+    },
     { regex: /adagio/i, canonical: 'Adagio' },
     { regex: /adapt\s*mx|adapt\.mx/i, canonical: 'AdaptMX' },
     { regex: /adform/i, canonical: 'Adform' },
@@ -203,6 +218,9 @@
     'adsrvr.org': 'The Trade Desk',
     'kueezrtb.com': 'KueezRTB',
     'weborama.com': 'Weborama Appnexus',
+    'amazon-adsystem.com': 'Amazon',
+    'aax.amazon-adsystem.com': 'Amazon',
+    'aps.amazon.com': 'Amazon',
   };
 
   const chips = new Map();
@@ -237,7 +255,7 @@
   hookSPA();
   LOG('Boot', location.href);
   // Dev: expose debugging handle
-  try { window.sspWatcher = { chips, slotMeta, prebidWins, rescan, scan, ensureChip, version: '0.3.2' }; } catch (e) {}
+  try { window.sspWatcher = { chips, slotMeta, prebidWins, rescan, scan, ensureChip, version: '0.3.3' }; } catch (e) {}
   // Extra rescans soon after boot to catch late inits
   [200, 800, 1800, 3500].forEach((ms) => setTimeout(scan, ms));
 

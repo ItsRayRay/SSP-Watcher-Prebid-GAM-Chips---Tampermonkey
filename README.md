@@ -141,6 +141,7 @@ The numeric mapping applied to badge text:
 29  Weborama Appnexus
 30  Xandr
 31  Google AdX
+32  Amazon
 ```
 
 Aliases (examples)
@@ -149,6 +150,7 @@ Aliases (examples)
 - Magnite/Rubicon → Magnite (15)
 - Sharethrough/btlr.com → Sharethrough (22)
 - Sovrn/Lijit → SOVRN (24)
+- Amazon / APS / TAM / UAM → Amazon (32)
 
 (Extend the alias list as you encounter partner naming variants.)
 
