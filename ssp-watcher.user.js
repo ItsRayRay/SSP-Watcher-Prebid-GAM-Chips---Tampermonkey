@@ -6,6 +6,7 @@
 // @author       ItsRayRay (https://github.com/ItsRayRay)
 // @match        *://*/*
 // @grant        none
+// @exclude      *://admanager.google.com/*
 // @run-at       document-idle
 // @noframes
 // @downloadURL  https://raw.githubusercontent.com/ItsRayRay/SSP-Watcher-Prebid-GAM-Chips---Tampermonkey/main/ssp-watcher.user.js
