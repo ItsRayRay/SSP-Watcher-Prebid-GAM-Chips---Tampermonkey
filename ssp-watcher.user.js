@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SSP Checker
 // @namespace    https://tampermonkey.net/
-// @version      0.3.3
+// @version      0.3.4
 // @description  Show numeric SSP ID of the Prebid (bidWon) winner per ad unit; falls back to 00 when unknown.
 // @author       ItsRayRay (https://github.com/ItsRayRay)
 // @match        *://*/*
